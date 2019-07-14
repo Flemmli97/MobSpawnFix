@@ -1,8 +1,7 @@
 CountNameTaggedMobs: false
 CountSpawnerMobs: true
-DivideMobCapWithPlayerCount: true
 DisableSpawner: true
-PlayerMobCap: 70
+PlayerMobCap: 40
 PlayerAnimalCap: 10
 PlayerAmbientCap: 15
 PlayerWaterCap: 15

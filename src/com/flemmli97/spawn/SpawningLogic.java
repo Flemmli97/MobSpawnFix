@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Ambient;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
@@ -60,22 +61,27 @@ public class SpawningLogic {
 		int cap = 0;
 		switch(type)
 		{
-			case AMBIENT: cap = Math.min(SpawnPlugin.playerAmbientCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.ambientMax/(float)players.size()):SpawnPlugin.ambientMax);
+			case AMBIENT: cap = Math.min(SpawnPlugin.playerAmbientCap, getActualCap(SpawnPlugin.ambientMax, loc.getWorld(), players.size()));
 				break;
-			case ANIMAL: cap = Math.min(SpawnPlugin.playerAnimalCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.animalMax/(float)players.size()):SpawnPlugin.animalMax);
+			case ANIMAL: cap = Math.min(SpawnPlugin.playerAnimalCap, getActualCap(SpawnPlugin.animalMax, loc.getWorld(), players.size()));
 				break;
-			case MOB: cap = Math.min(SpawnPlugin.playerMobCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.mobMax/(float)players.size()):SpawnPlugin.mobMax);
+			case MOB: cap = Math.min(SpawnPlugin.playerMobCap, getActualCap(SpawnPlugin.mobMax, loc.getWorld(), players.size()));
 				break;
-			case WATER: cap = Math.min(SpawnPlugin.playerWaterCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.waterMax/(float)players.size()):SpawnPlugin.waterMax);
+			case WATER: cap = Math.min(SpawnPlugin.playerWaterCap, getActualCap(SpawnPlugin.waterMax, loc.getWorld(), players.size()));
 				break;
 		}
-		loc.getWorld().getPlayers().forEach(player->{if(!player.getGameMode().equals(GameMode.SPECTATOR) && player.getLocation().distanceSquared(loc)< (range+1)*16*(range+1)*16)inRange.add(player);});
+		players.forEach(player->{if(!player.getGameMode().equals(GameMode.SPECTATOR) && player.getLocation().distanceSquared(loc)< (range+1)*16*(range+1)*16)inRange.add(player);});
 		for(Player player : inRange)
 		{
 			if(getEntityCount(player, type)<cap)
 				return true;
 		}
 		return false;
+	}
+	
+	public static int getActualCap(int cap, World world, int players)
+	{
+		return (int) (cap*world.getLoadedChunks().length/(289f*players));
 	}
 	
 	private static final Predicate<Entity> pred = entity->(!SpawnPlugin.countNameTaged||entity.getCustomName()==null)

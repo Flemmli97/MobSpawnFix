@@ -27,10 +27,10 @@ public class CommandSpawnDebug implements CommandExecutor{
 			Map<World,Integer> worldMobCap = Maps.newHashMap();
 			Map<World,Integer> worldWaterCap = Maps.newHashMap();
 			sender.getServer().getWorlds().forEach(world->{
-				worldAmbientCap.put(world, Math.min(SpawnPlugin.playerAmbientCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.ambientMax/(float)world.getPlayers().size()):SpawnPlugin.ambientMax));
-				worldAnimalCap.put(world, Math.min(SpawnPlugin.playerAnimalCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.animalMax/(float)world.getPlayers().size()):SpawnPlugin.animalMax));
-				worldMobCap.put(world, Math.min(SpawnPlugin.playerMobCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.mobMax/(float)world.getPlayers().size()):SpawnPlugin.mobMax));
-				worldWaterCap.put(world, Math.min(SpawnPlugin.playerWaterCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.waterMax/(float)world.getPlayers().size()):SpawnPlugin.waterMax));
+				worldAmbientCap.put(world, Math.min(SpawnPlugin.playerAmbientCap, SpawningLogic.getActualCap(SpawnPlugin.ambientMax, world, world.getPlayers().size())));
+				worldAnimalCap.put(world, Math.min(SpawnPlugin.playerAnimalCap, SpawningLogic.getActualCap(SpawnPlugin.animalMax, world, world.getPlayers().size())));
+				worldMobCap.put(world, Math.min(SpawnPlugin.playerMobCap, SpawningLogic.getActualCap(SpawnPlugin.mobMax, world, world.getPlayers().size())));
+				worldWaterCap.put(world, Math.min(SpawnPlugin.playerWaterCap, SpawningLogic.getActualCap(SpawnPlugin.waterMax, world, world.getPlayers().size())));
 			});			
 			for(Player player : sender.getServer().getOnlinePlayers())
 			{

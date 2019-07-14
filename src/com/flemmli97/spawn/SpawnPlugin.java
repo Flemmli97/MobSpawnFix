@@ -24,7 +24,7 @@ public class SpawnPlugin extends JavaPlugin{
 
 	protected static int animalMax, mobMax, waterMax, ambientMax, mobSpawnRangeDef, playerMobCap, playerAnimalCap, playerAmbientCap, playerWaterCap;
 	
-	protected static boolean countNameTaged, countSpawner, disableSpawner,divideCap;
+	protected static boolean countNameTaged, countSpawner, disableSpawner;
 	private static Map<String,Integer> worldSpawnRange = Maps.newHashMap();
 	
 	@Override
@@ -33,9 +33,8 @@ public class SpawnPlugin extends JavaPlugin{
 		this.reloadConfig();
 		countNameTaged=config.getBoolean("CountNameTaggedMobs", false);
 		countSpawner=config.getBoolean("CountSpawnerMobs", true);
-		divideCap=config.getBoolean("DivideMobCapWithPlayerCount", true);
 		disableSpawner=config.getBoolean("DisableSpawner", true);
-		playerMobCap=config.getInt("PlayerMobCap", 70);
+		playerMobCap=config.getInt("PlayerMobCap", 40);
 		playerAnimalCap=config.getInt("PlayerAnimalCap", 10);
 		playerAmbientCap=config.getInt("PlayerAmbientCap", 15);
 		playerWaterCap=config.getInt("PlayerWaterCap", 15);
