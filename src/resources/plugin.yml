@@ -1,0 +1,8 @@
+name: MobSpawnFix
+main: com.flemmli97.spawn.SpawnPlugin
+version: 1.0
+api-version: 1.14
+commands: 
+ getGlobalEntities:
+  description: Gets the nearby entities of each player. (Ambient, Animals, Mobs, WaterCreatures)
+  usage: /getGlobalEntities
