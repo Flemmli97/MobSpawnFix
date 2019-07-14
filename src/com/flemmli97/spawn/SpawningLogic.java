@@ -60,13 +60,13 @@ public class SpawningLogic {
 		int cap = 0;
 		switch(type)
 		{
-			case AMBIENT: cap = SpawnPlugin.divideCap?(int)(SpawnPlugin.ambientMax/(float)players.size()):SpawnPlugin.ambientMax;
+			case AMBIENT: cap = Math.min(SpawnPlugin.playerAmbientCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.ambientMax/(float)players.size()):SpawnPlugin.ambientMax);
 				break;
-			case ANIMAL: cap = SpawnPlugin.divideCap?(int)(SpawnPlugin.animalMax/(float)players.size()):SpawnPlugin.animalMax;
+			case ANIMAL: cap = Math.min(SpawnPlugin.playerAnimalCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.animalMax/(float)players.size()):SpawnPlugin.animalMax);
 				break;
-			case MOB: cap = SpawnPlugin.divideCap?(int)(SpawnPlugin.mobMax/(float)players.size()):SpawnPlugin.mobMax;
+			case MOB: cap = Math.min(SpawnPlugin.playerMobCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.mobMax/(float)players.size()):SpawnPlugin.mobMax);
 				break;
-			case WATER: cap = SpawnPlugin.divideCap?(int)(SpawnPlugin.waterMax/(float)players.size()):SpawnPlugin.waterMax;
+			case WATER: cap = Math.min(SpawnPlugin.playerWaterCap, SpawnPlugin.divideCap?(int)(SpawnPlugin.waterMax/(float)players.size()):SpawnPlugin.waterMax);
 				break;
 		}
 		loc.getWorld().getPlayers().forEach(player->{if(!player.getGameMode().equals(GameMode.SPECTATOR) && player.getLocation().distanceSquared(loc)< (range+1)*16*(range+1)*16)inRange.add(player);});

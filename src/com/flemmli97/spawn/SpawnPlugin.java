@@ -22,19 +22,24 @@ public class SpawnPlugin extends JavaPlugin{
 
 	public final FileConfiguration config = this.getConfig();
 
-	protected static int animalMax, mobMax, waterMax, ambientMax, mobSpawnRangeDef, playerCap;
+	protected static int animalMax, mobMax, waterMax, ambientMax, mobSpawnRangeDef, playerMobCap, playerAnimalCap, playerAmbientCap, playerWaterCap;
 	
-	protected static boolean countNameTaged, countSpawner,divideCap;
+	protected static boolean countNameTaged, countSpawner, disableSpawner,divideCap;
 	private static Map<String,Integer> worldSpawnRange = Maps.newHashMap();
 	
 	@Override
 	public void onEnable()
 	{
 		this.reloadConfig();
-		countNameTaged=config.getBoolean("CountNameTagedMobs", false);
+		countNameTaged=config.getBoolean("CountNameTaggedMobs", false);
 		countSpawner=config.getBoolean("CountSpawnerMobs", true);
 		divideCap=config.getBoolean("DivideMobCapWithPlayerCount", true);
-		playerCap=config.getInt("PlayerMobCap", 32);
+		disableSpawner=config.getBoolean("DisableSpawner", true);
+		playerMobCap=config.getInt("PlayerMobCap", 70);
+		playerAnimalCap=config.getInt("PlayerAnimalCap", 10);
+		playerAmbientCap=config.getInt("PlayerAmbientCap", 15);
+		playerWaterCap=config.getInt("PlayerWaterCap", 15);
+
 		this.saveDefaultConfig();
 		
 		this.getCommand("getGlobalEntities").setExecutor(new CommandSpawnDebug());
@@ -99,6 +104,8 @@ public class SpawnPlugin extends JavaPlugin{
 			{
 				event.getEntity().addScoreboardTag("SpawnPlugin:spawner");
 			}
+			if(SpawnPlugin.disableSpawner && !SpawningLogic.canSpawn(event.getEntityType(), event.getLocation()))
+				event.setCancelled(true);
 	    }
 		
 		@EventHandler
